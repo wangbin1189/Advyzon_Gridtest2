@@ -1,13 +1,13 @@
-const index_user = () => {
-  return fetch("/users").then(response => {
-    return response.json();
+const index_user = () => {                   
+  return fetch("/users").then(response => {  
+    return response.json();                  
   });
 };
 
-const create_user = userParam => {
+const create_user = function (userParam) {
   return fetch("/users", {
-    method: "POST",
-    body: JSON.stringify(userParam)
+    method: "POST",    
+    body: JSON.stringify(userParam) 
   });
 };
 
@@ -24,45 +24,43 @@ const delete_user = userId => {
   }); // TODO: 读取保存后的用户信息
 };
 
-var app = new Vue({
-  el: "#root",
-  data: {
+var app = new Vue({              
+  el: "#root",                    
+  data: {                         
     users: [],
 
-    showingAddPrompt: false /*显示弹窗的初始值是false*/,
-    newUserForm: {
-      // 清空
-      company: "3",
-      education: "4",
-      gender: "5",
-      name: "1",
-      title: "2"
+    showingAddPrompt: false,
+    newUserForm: {               
+
+      company: "yhlSoft",
+      education: "graduate",
+      gender: "Male",
+      name: "lalala",
+      title: "worker"
     },
 
-    showingEditPrompt: false,
+    showingEditPrompt: false,     
     updateUserForm: {},
 
-    showingDeletePrompt: false,
+    showingDeletePrompt: false,   
     userToBeDeleted: null
   },
 
-  mounted: function() {
-    console.log("mounted");
-  },
+
 
   methods: {
     clearUserForm() {
       this.newUserForm = {};
     },
-    createNewUser() {
+    createNewUser() {               
       create_user(this.newUserForm).then(() => {
-        this.clearUserForm();
-        this.showingAddPrompt = false;
-        return this.indexUsers();
+        this.clearUserForm();       
+        this.showingAddPrompt = false;  
+        return this.indexUsers();   
       });
     },
 
-    indexUsers() {
+    indexUsers() {                   
       index_user().then(userData => {
         this.users = userData;
       });
@@ -70,13 +68,13 @@ var app = new Vue({
 
     updateUser() {
       update_user(this.updateUserForm).then(() => {
-        this.showingEditPrompt = false;
-        return this.indexUsers();
+        this.showingEditPrompt = false;  
+        return this.indexUsers();  
       });
     },
 
     editUser(user) {
-      // TODO: 复制user，就等于不是pass by reference
+      
       this.updateUserForm = Object.assign({}, user);
       this.showingEditPrompt = true;
     },
@@ -88,9 +86,9 @@ var app = new Vue({
       });
     }
   },
-  created() {
+  created() {                  //有经验的程序员好像都把这个刷屏写在后面
     this.indexUsers();
   }
 });
 
-window.app = app;
+

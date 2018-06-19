@@ -1,3 +1,4 @@
+<!-- 不用了 -->
 <?php
 
 $conn = new mysqli("binwang", "btkzwddhjx", "Bi63942657!", "UncleLi"); 

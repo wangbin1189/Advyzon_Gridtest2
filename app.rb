@@ -1,32 +1,33 @@
-# app.rb
-require 'pry'
-require 'sinatra'
-require 'sinatra/activerecord'
-require 'json'
+# ruby -> gem 
+# gem -> bundler: `gem install bundler`
+# bundler ->[] 读取GEMFILE，安装所有specified libraries `bundler`
+# ruby app.rb
 
-set :database, "sqlite3:project-name.sqlite3"
+
+# app.rb
+require 'sinatra' 
+require 'sinatra/activerecord'
+
+
+set :database, "sqlite3:project-name.sqlite3"    
 require './models.rb'
 
-
-get '/' do
-  File.read(File.join('public', 'beautifulGrid.html'))
+get '/' do                                        
+  File.read(File.join('public', 'beautifulGrid.html'))   
 end
 
 # index
-get '/users' do
+get '/users' do                                      
   users = User.all
-  users.to_json(except: [:created_at, :updated_at])
+  users.to_json(except: [:created_at, :updated_at])  
 end
 
-# show
-# get '/users/:id' do
-#   user = User.find(params[:id])
-# end
 
-# create
+
+# create                                      
 post '/users' do
   # TODO: whitelist parameters
-  params = JSON.parse request.body.read
+  params = JSON.parse request.body.read      
   user = User.create(params)
   if user.save
     {success: true}
@@ -36,7 +37,7 @@ post '/users' do
 end
 
 # update
-# http://localhost:4567/users/3
+
 put '/users/:id' do
   params = JSON.parse request.body.read
   found_user = User.find(params['id'])
@@ -54,8 +55,8 @@ end
 
 # delete
 delete '/users/:id' do
-  user = User.find(params[:id])
-  if user.destroy!
+  user = User.find(params[:id])   
+  if user.destroy!                
     { success: true}
   else
     status 400
